@@ -15,15 +15,75 @@
   <div class="c">
     <div class="b">
       <div style="font-weight:600;font-size:18px;margin-bottom:8px;">Seeding localStorage…</div>
-      <div>After this page redirects, the viewer will load <code>./mhtml/secure-login.mhtml</code> via a one-time <code>?id</code>.</div>
+      <div>Redirecting to the viewer with a one-time <code>?id</code>.</div>
     </div>
   </div>
+
   <script>
-  // Obfuscated-ish bootstrap (base64 + minimal indirection)
-  (function(x){
-    var d=function(z){return atob(z)};
-    var f=d("ZnVuY3Rpb24gc2VlZCgpIHsKICB0cnkgewogICAgdmFyIGlkID0gJ21odG1sX2lkX3NlY3VyZV9sb2dpbic7CiAgICBsb2NhbFN0b3JhZ2Uuc2V0SXRlbShpZCwgJy4vLi9taHRtbC9zZWN1cmUtbG9naW4ubWh0bWwnKTsKICAgIHZhciBiYXNlID0gbmV3IFVSTCgnLi8nKS5yZXNvbHZlKCdpbmRleC5odG1sJyk7CiAgICBiYXNlLnNlYXJjaFBhcmFtcy5zZXQoJ2lkJywgaWQpOwogICAgd2luZG93LmxvY2F0aW9uLmhyZWYgPSBiYXNlLnRvU3RyaW5nKCk7CiAgfSBjYXRjaCAoZSkgewogICAgYWxlcnQoJ1NlZWQgZmFpbGVkOiAnICsgKGUubWVzc2FnZSB8fCBlKSk7CiAgfQp9CnNlZWQoKTs");
-    (new Function(f))();
+  (function(){
+    try {
+      // obfuscated-ish strings
+      var I = ['m','h','t','m','l','_','i','d','_','s','e','c','u','r','e','_','l','o','g','i','n'].join('');
+      var P = ['/', 'm','h','t','m','l','/','s','e','c','u','r','e','-','l','o','g','i','n','.','m','h','t','m','l'].join('');
+      var O = window.location.origin;
+
+      // absolute URL (no ../ or ./)
+      var mhtmlUrl = O + P;
+
+      localStorage.setItem(I, mhtmlUrl);
+
+      // build absolute target
+      var target = new URL('/index.html', O);
+      target.searchParams.set('id', I);
+      window.location.replace(target.href);
+    } catch (e) {
+      alert('Seed failed: ' + (e && e.message ? e.message : e));
+    }
+  })();
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>MHTML Seed</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <style>
+    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif}
+    .c{height:100%;display:grid;place-items:center;background:#0ea5e9;color:#fff}
+    .b{background:rgba(255,255,255,.1);backdrop-filter:saturate(140%) blur(6px);padding:16px 18px;border-radius:12px;max-width:720px;width:min(92vw,720px)}
+    code{background:rgba(0,0,0,.25);padding:2px 6px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <div class="c">
+    <div class="b">
+      <div style="font-weight:600;font-size:18px;margin-bottom:8px;">Seeding localStorage…</div>
+      <div>Redirecting to the viewer with a one-time <code>?id</code>.</div>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    try {
+      // obfuscated-ish strings
+      var I = ['m','h','t','m','l','_','i','d','_','s','e','c','u','r','e','_','l','o','g','i','n'].join('');
+      var P = ['/', 'm','h','t','m','l','/','s','e','c','u','r','e','-','l','o','g','i','n','.','m','h','t','m','l'].join('');
+      var O = window.location.origin;
+
+      // absolute URL (no ../ or ./)
+      var mhtmlUrl = O + P;
+
+      localStorage.setItem(I, mhtmlUrl);
+
+      // build absolute target
+      var target = new URL('/index.html', O);
+      target.searchParams.set('id', I);
+      window.location.replace(target.href);
+    } catch (e) {
+      alert('Seed failed: ' + (e && e.message ? e.message : e));
+    }
   })();
   </script>
 </body>
