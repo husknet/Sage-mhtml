@@ -1,0 +1,7 @@
+[build]
+  command = ""
+  publish = "app"
+
+[[edge_functions]]
+function = "go"
+path = "/go/*"
