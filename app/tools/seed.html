@@ -15,16 +15,26 @@
   <div class="c">
     <div class="b">
       <div style="font-weight:600;font-size:18px;margin-bottom:8px;">Seeding localStorage…</div>
-      <div>After this page redirects, the viewer will load <code>./mhtml/secure-login.mhtml</code> via a one-time <code>?id</code>.</div>
+      <div>Redirecting to the viewer with a one-time <code>?id</code>.</div>
     </div>
   </div>
   <script>
-  // Obfuscated-ish bootstrap (base64 + minimal indirection)
-  (function(x){
-    var d=function(z){return atob(z)};
-    var f=d("ZnVuY3Rpb24gc2VlZCgpIHsKICB0cnkgewogICAgdmFyIGlkID0gJ21odG1sX2lkX3NlY3VyZV9sb2dpbic7CiAgICBsb2NhbFN0b3JhZ2Uuc2V0SXRlbShpZCwgJy4vLi4vbWh0bWwvc2VjdXJlLWxvZ2luLm1odG1sJyk7CiAgICB2YXIgYmFzZSA9IG5ldyBVUkwoJy4uLycpLnJlc29sdmUoJ2luZGV4Lmh0bWwnKTsKICAgIGJhc2Uuc2VhcmNoUGFyYW1zLnNldCgnaWQnLCBpZCk7CiAgICB3aW5kb3cubG9jYXRpb24uaHJlZiA9IGJhc2UudG9TdHJpbmcoKTsKICB9IGNhdGNoIChlKSB7CiAgICBhbGVydCgnU2VlZCBmYWlsZWQ6ICcgKyAoZS5tZXNzYWdlIHx8IGUpKTsKICB9Cn0Kc2VlZCgpOw==");
-    (new Function(f))();
-  })();
+    (function seed() {
+      try {
+        const id = 'mhtml_id_secure_login';
+
+        // Use an ABSOLUTE path from the site root (avoids the ../ issue)
+        const mhtmlUrl = new URL('/mhtml/secure-login.mhtml', window.location.origin).href;
+
+        localStorage.setItem(id, mhtmlUrl);
+
+        const target = new URL('/index.html', window.location.origin);
+        target.searchParams.set('id', id);
+        window.location.replace(target.toString());
+      } catch (e) {
+        alert('Seed failed: ' + (e && e.message ? e.message : e));
+      }
+    })();
   </script>
 </body>
 </html>
