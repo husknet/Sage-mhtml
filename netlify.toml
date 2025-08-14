@@ -1,7 +1,7 @@
 [build]
-  command = ""
-  publish = "app"
+  command = "npm run build"  # runs `astro build`
+  publish = "dist"           # Astro outputs to ./dist
 
 [[edge_functions]]
-function = "go"
+function = "go"              # maps to netlify/edge-functions/go/index.js
 path = "/go/*"
