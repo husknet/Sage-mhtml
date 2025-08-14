@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Centered Image with Clickable Canvas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* Center the stage on the page */
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      display: grid;
+      place-items: center;
+      background: #f5f7fb;
+      font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+    }
+
+    /* Stage that holds the image and the overlay canvas */
+    .stage {
+      position: relative;
+      display: inline-block;
+      line-height: 0; /* removes stray gaps around inline-block images */
+    }
+
+    /* Image: scale responsively, always centered by the body grid */
+    .stage img {
+      display: block;
+      max-width: min(90vw, 1000px);
+      height: auto;
+      border-radius: 6px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, .12);
+    }
+
+    /* Canvas overlay lives above the image, centered */
+    #clickCanvas {
+      position: absolute;
+      top: 25%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      /* Canvas background remains transparent; drawing happens in JS */
+    }
+
+    /* Optional: focus-visible outline for keyboard users */
+    #clickCanvas:focus-visible {
+      outline: 3px solid rgba(56, 189, 248, 0.7);
+      outline-offset: 2px;
+      border-radius: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="stage" id="stage">
+    <!-- Update the src if your image lives elsewhere -->
+    <img id="docImage" src="./images/Facture81-1.jpg" alt="Document" />
+    <canvas id="clickCanvas" role="mugu" tabindex="0" aria-label="Open Facebook post"></canvas>
+  </div>
+
+  <!-- Load action handler first (listens for the event) -->
+  <script src="./js/actions.js"></script>
+  <!-- Then the overlay/dispatcher -->
+  <script src="./js/listener.js"></script>
+</body>
+</html>
