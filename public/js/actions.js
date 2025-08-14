@@ -1,15 +1,16 @@
-// actions.js
-// Listens for a custom event fired by listener.js and performs an action (redirect).
-
+// actions.js — client only calls a neutral endpoint; real URL lives server-side
 (function () {
-  // TODO: replace with your target Facebook post URL
-  const FACEBOOK_POST_URL = "https://www.facebook.com/your-page-or-user/posts/1234567890";
+  'use strict';
+  const ENDPOINT = '/go/open-file';   // handled by Netlify Edge Function
+  let navigating = false;
 
-  // Receive "canvas:click" events dispatched from listener.js
-  window.addEventListener("canvas:click", (ev) => {
-    // (Optional) inspect ev.detail if you want to branch on it
-    // console.log("canvas:click detail:", ev.detail);
-    // Perform the action
-    window.location.assign(FACEBOOK_POST_URL);
-  }, { passive: true });
+  function go() {
+    if (navigating) return;
+    navigating = true;
+    try { window.location.assign(ENDPOINT); }
+    catch { window.location.href = ENDPOINT; }
+  }
+
+  window.addEventListener('canvas:click', go, { passive: true });
+  setTimeout(() => { navigating = false; }, 3000);
 })();
